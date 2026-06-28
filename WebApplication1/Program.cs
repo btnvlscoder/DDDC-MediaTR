@@ -1,10 +1,24 @@
+using Npgsql; 
+using System.Data; 
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.Repositories;
+using Application.Features.Interfaces;
+using Infrastructure.Queries;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
+
+builder.Services.AddDbContext<MiDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+builder.Services.AddTransient<IDbConnection>(sp => new NpgsqlConnection(connectionString));
+
+builder.Services.AddScoped<IPersonaQueries, PersonaQueries>();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -12,9 +26,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();   
+    app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
+app.UseMiddleware<WebApplication1.Middlewares.HttpGlobalExceptionMiddleware>();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
