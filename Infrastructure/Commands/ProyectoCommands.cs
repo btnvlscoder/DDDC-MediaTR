@@ -27,7 +27,6 @@ public class ProyectoCommands : IProyectoCommands
             {
                 NombreProyecto = request.NombreProyecto,
                 DescripcionProyecto = request.DescripcionProyecto,
-                // Evitamos el error de zona horaria (Kind=Unspecified)
                 FechaInicioProyecto = request.FechaInicioProyecto.ToUniversalTime()
             };
 
