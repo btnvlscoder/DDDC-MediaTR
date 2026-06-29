@@ -18,6 +18,7 @@ public class MiDbContext : DbContext
 
     public DbSet<Persona> Personas { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Proyecto> Proyecto { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +26,7 @@ public class MiDbContext : DbContext
         //Aplicamos la configuración
         modelBuilder.ApplyConfiguration(new PersonaEntityConfiguration());
         modelBuilder.ApplyConfiguration(new UsuarioEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new ProyectoEntityConfiguration());
         //Llamamos a la base y LISTO
         base.OnModelCreating(modelBuilder);
     }

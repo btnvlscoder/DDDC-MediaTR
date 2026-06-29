@@ -40,7 +40,7 @@ public class UsuarioQueries:IUsuarioQueries {
             _dbConn.Open();
             var resultado = await _dbConn.QueryAsync<UsuarioResponse>(template.RawSql, template.Parameters);
 
-            _logger.LogInformation($"ListarProyectos: Consulta ejecutada con éxito. Registros obtenidos: {resultado.Count()}");
+            _logger.LogInformation($"ListarUsuarios: Consulta ejecutada con éxito. Registros obtenidos: {resultado.Count()}");
 
             return new ResponseData<IEnumerable<UsuarioResponse>>
             {

@@ -41,7 +41,7 @@ public class PersonaQueries:IPersonaQueries {
             _dbConn.Open();
             var resultado = await _dbConn.QueryAsync<PersonaResponse>(template.RawSql, template.Parameters);
 
-            _logger.LogInformation($"ListarProyectos: Consulta ejecutada con éxito. Registros obtenidos: {resultado.Count()}");
+            _logger.LogInformation($"ListarPersonas: Consulta ejecutada con éxito. Registros obtenidos: {resultado.Count()}");
 
             return new ResponseData<IEnumerable<PersonaResponse>>
             {
@@ -52,7 +52,7 @@ public class PersonaQueries:IPersonaQueries {
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "ListarUsuarios: Error crítico al consultar la base de datos.");
+            _logger.LogError(ex, "ListarPersonas: Error crítico al consultar la base de datos.");
             return new ResponseData<IEnumerable<PersonaResponse>>
             {
                 Exitoso = false,

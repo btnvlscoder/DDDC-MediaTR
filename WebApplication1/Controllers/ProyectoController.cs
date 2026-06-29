@@ -1,5 +1,7 @@
 ﻿using Application.Features.Interfaces;
+using Application.Models.Requests;
 using Application.Models.Responses;
+using Infrastructure.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers;
@@ -9,10 +11,11 @@ namespace WebApplication1.Controllers;
 public class ProyectoController : ControllerBase
 {
     private readonly IProyectoQueries _proyectoQueries;
-
-    public ProyectoController(IProyectoQueries proyectoQueries)
+    private readonly IProyectoCommands _proyectoCommands; 
+    public ProyectoController(IProyectoQueries proyectoQueries, IProyectoCommands proyectoCommands)
     {
         _proyectoQueries = proyectoQueries;
+        _proyectoCommands = proyectoCommands;
     }
 
     [HttpGet("ListarProyectos")]
@@ -20,5 +23,13 @@ public class ProyectoController : ControllerBase
     {
         var response = await _proyectoQueries.ListarProyectos(cancellationToken);
         return Ok(response);
+    }
+
+    [HttpPost("CrearProyecto")]
+    public async Task<ActionResult<ResponseData<int>>> CrearProyecto([FromBody] CrearProyectoRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _proyectoCommands.CrearProyecto(request, cancellationToken);
+        if (response.Exitoso) return Ok(response);
+        return BadRequest(response);
     }
 }
