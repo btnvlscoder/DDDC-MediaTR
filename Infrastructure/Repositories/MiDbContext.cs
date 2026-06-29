@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using MiPracticaCasera.Infrastructure.EntityConfiguration;
+using Infrastructure.EntityConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,12 +17,14 @@ public class MiDbContext : DbContext
     }
 
     public DbSet<Persona> Personas { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         //Aplicamos la configuración
         modelBuilder.ApplyConfiguration(new PersonaEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new UsuarioEntityConfiguration());
         //Llamamos a la base y LISTO
         base.OnModelCreating(modelBuilder);
     }

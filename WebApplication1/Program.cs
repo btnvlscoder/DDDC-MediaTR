@@ -4,18 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure.Repositories;
 using Application.Features.Interfaces;
 using Infrastructure.Queries;
+using Infrastructure.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
 
 builder.Services.AddDbContext<MiDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(connectionString)
+           .EnableSensitiveDataLogging());
 
 builder.Services.AddTransient<IDbConnection>(sp => new NpgsqlConnection(connectionString));
 
 builder.Services.AddScoped<IPersonaQueries, PersonaQueries>();
-
+builder.Services.AddScoped<IUsuarioQueries, UsuarioQueries>();
+builder.Services.AddScoped<IPersonaCommands, PersonaCommands>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

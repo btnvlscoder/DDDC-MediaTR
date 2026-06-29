@@ -36,7 +36,6 @@ public class PersonaQueries:IPersonaQueries {
                 /**orderby**/
                 ");
 
-            // Ordenamos por la llave primaria real
             sb.OrderBy("id ASC");
 
             _dbConn.Open();

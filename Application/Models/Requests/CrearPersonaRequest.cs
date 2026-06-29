@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.Entities;
+namespace Application.Models.Requests;
 
-public class Persona
+public class CrearPersonaRequest
 {
-    public int IdPersona { set; get; }
+    public int UsuarioId { set; get; }
     public string NombrePersona { set; get; }
     public string ApellidoPersona { set; get; }
-    public string RutPersona { set; get; }
+    public string RutPersona {  set; get; }
     public int TelefonoPersona { set; get; }
-
     public DateTime FechaNacimientoPersona { set; get; }
-
-    public int UsuarioId { set; get; }//fk usuario
-    public Usuario Usuario { set; get; }
 
 }
