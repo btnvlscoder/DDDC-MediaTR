@@ -8,5 +8,7 @@ namespace Application.Features.Interfaces;
 
 public interface IProyectoCommands
 {
-    Task<ResponseData<int>> CrearProyecto(CrearProyectoRequest request, CancellationToken cancellationToken);
+    Task<ResponseData<int>> AgregarProyecto(CrearProyectoRequest request, CancellationToken cancellationToken);
+
+    Task<ResponseData<int>> ActualizarProyecto(ActualizarProyectoRequest request, CancellationToken cancellationToken);
 }

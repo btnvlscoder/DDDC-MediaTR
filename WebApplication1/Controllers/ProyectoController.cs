@@ -28,8 +28,20 @@ public class ProyectoController : ControllerBase
     [HttpPost("CrearProyecto")]
     public async Task<ActionResult<ResponseData<int>>> CrearProyecto([FromBody] CrearProyectoRequest request, CancellationToken cancellationToken)
     {
-        var response = await _proyectoCommands.CrearProyecto(request, cancellationToken);
+        var response = await _proyectoCommands.AgregarProyecto(request, cancellationToken);
         if (response.Exitoso) return Ok(response);
+        return BadRequest(response);
+    }
+
+    [HttpPut("ActualizarProyecto")]
+    public async Task<ActionResult<ResponseData<int>>> ActualizarProyecto([FromBody] ActualizarProyectoRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _proyectoCommands.ActualizarProyecto(request, cancellationToken);
+
+        if (response.Exitoso)
+        {
+            return Ok(response);
+        }
         return BadRequest(response);
     }
 }
