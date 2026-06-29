@@ -40,37 +40,29 @@ public class PersonaQueries:IPersonaQueries {
 
             _dbConn.Open();
             var resultado = await _dbConn.QueryAsync<PersonaResponse>(template.RawSql, template.Parameters);
-            _dbConn.Close();
 
-            if (resultado.Any()){
-                _logger.LogInformation($"ListarPersonas: Se enmcontraron {resultado.Count()}resultaods");
-                return new ResponseData<IEnumerable<PersonaResponse>>
-                {
-                    Descripcion = "Ok",
-                    Resultado = resultado,
-                    Exitoso = true
-                };
-            }
-            else
+            _logger.LogInformation($"ListarProyectos: Consulta ejecutada con éxito. Registros obtenidos: {resultado.Count()}");
+
+            return new ResponseData<IEnumerable<PersonaResponse>>
             {
-                _logger.LogWarning("ListarPersonas: sin resultados");
-                return new ResponseData<IEnumerable<PersonaResponse>>
-                {
-                    Descripcion = "No hay registros asociados",
-                    Resultado = Enumerable.Empty<PersonaResponse>(),
-                    Exitoso = false
-                };
-            }
+                Exitoso = true,
+                Resultado = resultado,
+                Descripcion = "Consulta realizada exitosamente."
+            };
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "ListarPersonas: Error inesperado");
+            _logger.LogError(ex, "ListarUsuarios: Error crítico al consultar la base de datos.");
             return new ResponseData<IEnumerable<PersonaResponse>>
             {
-                Descripcion = "ListarPersonas: Error inesperado",
-                Resultado = null,
-                Exitoso = false
+                Exitoso = false,
+                Resultado = Enumerable.Empty<PersonaResponse>(),
+                Descripcion = "No se pudo procesar la solicitud de lectura debido a un inconveniente interno."
             };
+        }
+        finally
+        {
+            _dbConn.Close();
         }
     }
 }

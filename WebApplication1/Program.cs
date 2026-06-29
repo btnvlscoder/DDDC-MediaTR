@@ -19,6 +19,7 @@ builder.Services.AddTransient<IDbConnection>(sp => new NpgsqlConnection(connecti
 builder.Services.AddScoped<IPersonaQueries, PersonaQueries>();
 builder.Services.AddScoped<IUsuarioQueries, UsuarioQueries>();
 builder.Services.AddScoped<IPersonaCommands, PersonaCommands>();
+builder.Services.AddScoped<IProyectoQueries, ProyectoQueries>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
